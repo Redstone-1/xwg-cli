@@ -6,6 +6,8 @@ import {
 import { BRAND_LOGO, VERSION } from './const';
 
 const runner = () => {
+  program.name(chalk.cyan('xwg')).usage(`${chalk.yellow('<command>')} [options]`);
+
   program.version(
     `\r\n  ${chalk.cyan.bold(VERSION)}
     ${chalk.cyan.bold(BRAND_LOGO)}`

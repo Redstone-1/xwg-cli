@@ -12,6 +12,7 @@ export default async (options: any, projectName: string, targetDirectory: string
   if (options.force) {
     // 删除重名目录
     await fs.remove(targetDirectory);
+    await downloadRepo(projectName, targetDirectory);
   } else {
     const { isOverwrite } = await prompt([
       // 返回值为 Promise
