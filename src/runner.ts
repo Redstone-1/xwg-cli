@@ -16,7 +16,7 @@ const runner = () => {
   create();
 
   program.on("--help", function () {
-    console.log(`\r\n终端执行 ${chalk.cyan.bold("xwg <command> --help")} 获取更多命令详情`);
+    console.log(`\r\n终端执行 ${chalk.cyan.bold("xwg <command> --help")} 获取更多命令详情\r\n`);
   });
 
   program.parse(process.argv);

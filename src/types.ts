@@ -6,4 +6,4 @@ export type LoadingOther = {
   projectName: string
 }
 
-export type TProjectType = 'library' | 'vue' | 'react' | 'uniapp';
+export type TProjectType = 'library' | 'vue' | 'react' | 'uniapp' | 'koa' | 'nest';
