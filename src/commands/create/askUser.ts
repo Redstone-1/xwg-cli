@@ -1,25 +1,5 @@
 import prompt from "../../utils/prompt";
 
-// ========== vite ==========
-/** 询问是否支持使用 Vite 构建项目  */
-export const askIsAgreeVite = async () => {
-  const { isAgreeVite } = await prompt([
-    // 返回值为 Promise
-    // 具体配置参见：https://www.npmjs.com/package/inquirer#questions
-    {
-      type: "list",
-      name: "isAgreeVite",
-      message: "本 cli 下所有模板均使用 Vite 构建，是否继续？",
-      choices: [
-        { name: "继续", value: true },
-        { name: "退出", value: false },
-      ],
-    },
-  ]);
-
-  return isAgreeVite;
-};
-
 // ========== library ==========
 /** 询问要创建的项目类型 */
 export const askCreateType = async () => {
@@ -31,12 +11,12 @@ export const askCreateType = async () => {
       name: "projectType",
       message: "请选择你要创建的项目类型",
       choices: [
-        { name: "npm 库", value: 'library' },
-        { name: "vue 项目", value: 'vue' },
-        { name: "react 项目", value: 'react' },
-        { name: "uniapp 项目", value: 'uniapp' },
-        { name: "koa 项目", value: 'koa' },
-        { name: "nest 项目", value: 'nest' },
+        { name: "vue", value: 'vue' },
+        { name: "react", value: 'react' },
+        { name: "uniapp", value: 'uniapp' },
+        { name: "koa", value: 'koa' },
+        { name: "nest", value: 'nest' },
+        { name: "library", value: 'library' },
       ],
     },
   ]);
