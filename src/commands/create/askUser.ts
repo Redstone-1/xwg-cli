@@ -15,7 +15,7 @@ export const askCreateType = async () => {
         { name: "react", value: 'react' },
         { name: "uniapp", value: 'uniapp' },
         { name: "koa", value: 'koa' },
-        { name: "nest", value: 'nest' },
+        // { name: "nest", value: 'nest' },
         { name: "library", value: 'library' },
       ],
     },
