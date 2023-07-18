@@ -1,5 +1,25 @@
 import prompt from "../../utils/prompt";
 
+// ========== overwrite ==========
+/** 询问要创建的项目类型 */
+export const askOverwrite = async () => {
+  const { isOverwrite } = await prompt([
+    // 返回值为 Promise
+    // 具体配置参见：https://www.npmjs.com/package/inquirer#questions
+    {
+      type: "list",
+      name: "isOverwrite",
+      message: "原目录已经存在，请选择是否覆盖",
+      choices: [
+        { name: "覆盖", value: true },
+        { name: "取消", value: false },
+      ],
+    },
+  ]);
+
+  return isOverwrite;
+};
+
 // ========== library ==========
 /** 询问要创建的项目类型 */
 export const askCreateType = async () => {

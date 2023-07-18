@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import {
   askCreateType,
   askNeedTypeScript,
@@ -8,7 +9,6 @@ import {
 import { loading } from "../../utils/loading";
 import { getRepoURL, downloadGitRepo } from "../../const";
 import { TProjectType } from '../../types';
-import chalk from "chalk";
 
 /**
  * 下载 vue 模板

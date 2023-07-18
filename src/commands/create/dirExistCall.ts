@@ -1,6 +1,6 @@
 import fs from "fs-extra";
-import prompt from "../../utils/prompt";
 import downloadRepo from './downloadRepo';
+import { askOverwrite } from './askUser';
 
 /**
  * 如果目录已经存在时调用
@@ -14,19 +14,7 @@ export default async (options: any, projectName: string, targetDirectory: string
     await fs.remove(targetDirectory);
     await downloadRepo(projectName, targetDirectory);
   } else {
-    const { isOverwrite } = await prompt([
-      // 返回值为 Promise
-      // 具体配置参见：https://www.npmjs.com/package/inquirer#questions
-      {
-        type: "list",
-        name: "isOverwrite",
-        message: "原目录已经存在，请选择是否覆盖",
-        choices: [
-          { name: "覆盖", value: true },
-          { name: "取消", value: false },
-        ],
-      },
-    ]);
+    const isOverwrite = await askOverwrite();
     // 选择 Overwirte
     if (isOverwrite) {
       // 先删除掉原有重名目录
