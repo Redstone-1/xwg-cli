@@ -4,9 +4,10 @@
  * @create 2023/06/25
  */
 import fs from 'fs-extra';
-import path from 'node:path';
-import util from 'node:util';
+import path from 'path';
+import util from 'util';
 import download from 'download-git-repo';
+import { TRepoURLTag, TRepoURL } from './types';
 
 /** 当前根目录 */
 export const ROOT_DIR = path.resolve(__dirname, '../');
@@ -26,7 +27,7 @@ export const BRAND_LOGO = `
 /** 当前版本号 */
 export const VERSION = version;
 
-export const getRepoURL = (tag: string) => {
+export const getRepoURL = (tag: TRepoURLTag): TRepoURL<TRepoURLTag> => {
   return `https://gitee.com/redstone-1/${tag}.git`;
 };
 

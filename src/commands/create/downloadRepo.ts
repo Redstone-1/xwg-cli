@@ -6,9 +6,9 @@ import {
   askVueVersion,
   askNeedUviewUI,
 } from "./askUser";
-import { loading } from "../../utils/loading";
-import { getRepoURL, downloadGitRepo } from "../../const";
-import { TProjectType } from '../../types';
+import { downloadRepo } from '../../utils/downloadRepo';
+import { getRepoURL } from "../../const";
+import { TProjectType, TRepoURL, TRepoURLTag } from '../../types';
 
 /**
  * 下载 vue 模板
@@ -24,7 +24,7 @@ const downloadVueTemplate = async (projectName: string, targetDirectory: string)
   if (!needTypeScript) {
     repoURL = getRepoURL('vue-template');
   }
-  await loading('正在下载模板，请稍后...', () => downloadGitRepo(`direct:${repoURL}`, targetDirectory, { clone: true }), { projectName });
+  await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
 };
 
 /**
@@ -41,7 +41,7 @@ const downloadReactTemplate = async (projectName: string, targetDirectory: strin
   if (!needTypeScript) {
     repoURL = getRepoURL('react-template');
   }
-  await loading('正在下载模板，请稍后...', () => downloadGitRepo(`direct:${repoURL}`, targetDirectory, { clone: true }), { projectName });
+  await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
 };
 
 /**
@@ -58,7 +58,7 @@ const downloadLibraryTemplate = async (projectName: string, targetDirectory: str
   if (!needTypeScript) {
     repoURL = getRepoURL('library');
   }
-  await loading('正在下载模板，请稍后...', () => downloadGitRepo(`direct:${repoURL}`, targetDirectory, { clone: true }), { projectName });
+  await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
 };
 
 /**
@@ -92,7 +92,7 @@ const downloadUniappTemplate = async (projectName: string, targetDirectory: stri
     }
   }
 
-  await loading('正在下载模板，请稍后...', () => downloadGitRepo(`direct:${repoURL}`, targetDirectory, { clone: true }), { projectName });
+  await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
 };
 
 /**
@@ -102,7 +102,7 @@ const downloadUniappTemplate = async (projectName: string, targetDirectory: stri
  */
 const downloadKoaTemplate = async (projectName: string, targetDirectory: string) => {
   const repoURL = getRepoURL('koa');
-  await loading('正在下载模板，请稍后...', () => downloadGitRepo(`direct:${repoURL}`, targetDirectory, { clone: true }), { projectName });
+  await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
 };
 
 /**

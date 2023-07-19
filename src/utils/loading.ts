@@ -3,7 +3,7 @@ import chalk from "chalk";
 import { LoadingOther } from '../types';
 
 /**
- * 睡觉函数
+ * 睡眠函数
  * @param {Number} delay 睡眠时间
  */
 const sleep = (delay: number) => {
