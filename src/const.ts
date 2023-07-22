@@ -7,7 +7,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import util from 'util';
 import download from 'download-git-repo';
-import { TRepoURLTag, TRepoURL } from './types';
+import { TRepoURLTag, IRepoURLTag, TRepoURL } from './types';
 
 /** 当前根目录 */
 export const ROOT_DIR = path.resolve(__dirname, '../');
@@ -32,3 +32,18 @@ export const getRepoURL = (tag: TRepoURLTag): TRepoURL<TRepoURLTag> => {
 };
 
 export const downloadGitRepo = util.promisify(download);
+
+export const repoURLTag: IRepoURLTag = {
+  vueTemplate: 'vue-template',
+  vueTemplateTypescript: 'vue-template-typescript',
+  reactTemplate: 'react-template',
+  reactTemplateTypescript: 'react-template-typescript',
+  uniappVue2: 'uniapp-vue2',
+  uniappVue2Uview: 'uniapp-vue2-uview',
+  uniappVue3: 'uniapp-vue3',
+  uniappVue3Typescript: 'uniapp-vue3-typescript',
+  koa: 'koa',
+  nest: 'nest',
+  library: 'library',
+  libraryTypescript: 'library-typescript',
+};

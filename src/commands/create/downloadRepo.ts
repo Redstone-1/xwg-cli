@@ -7,7 +7,7 @@ import {
   askNeedUviewUI,
 } from "./askUser";
 import { downloadRepo } from '../../utils/downloadRepo';
-import { getRepoURL } from "../../const";
+import { getRepoURL, repoURLTag } from "../../const";
 import { TProjectType, TRepoURL, TRepoURLTag } from '../../types';
 
 /**
@@ -19,10 +19,10 @@ const downloadVueTemplate = async (projectName: string, targetDirectory: string)
   let repoURL = '';
   const needTypeScript = await askNeedTypeScript();
   if (needTypeScript) {
-    repoURL = getRepoURL('vue-template-typescript');
+    repoURL = getRepoURL(repoURLTag.vueTemplateTypescript);
   }
   if (!needTypeScript) {
-    repoURL = getRepoURL('vue-template');
+    repoURL = getRepoURL(repoURLTag.vueTemplate);
   }
   await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
 };
@@ -36,10 +36,10 @@ const downloadReactTemplate = async (projectName: string, targetDirectory: strin
   let repoURL = '';
   const needTypeScript = await askNeedTypeScript();
   if (needTypeScript) {
-    repoURL = getRepoURL('react-template-typescript');
+    repoURL = getRepoURL(repoURLTag.reactTemplateTypescript);
   }
   if (!needTypeScript) {
-    repoURL = getRepoURL('react-template');
+    repoURL = getRepoURL(repoURLTag.reactTemplate);
   }
   await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
 };
@@ -53,10 +53,10 @@ const downloadLibraryTemplate = async (projectName: string, targetDirectory: str
   let repoURL = '';
   const needTypeScript = await askNeedTypeScript();
   if (needTypeScript) {
-    repoURL = getRepoURL('library-typescript');
+    repoURL = getRepoURL(repoURLTag.libraryTypescript);
   }
   if (!needTypeScript) {
-    repoURL = getRepoURL('library');
+    repoURL = getRepoURL(repoURLTag.library);
   }
   await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
 };
@@ -75,20 +75,20 @@ const downloadUniappTemplate = async (projectName: string, targetDirectory: stri
   if (vueVersion === 2) {
     const needUviewUI = await askNeedUviewUI();
     if (needUviewUI) {
-      repoURL = getRepoURL('uniapp-vue2-uview');
+      repoURL = getRepoURL(repoURLTag.uniappVue2Uview);
     }
     if (!needUviewUI) {
-      repoURL = getRepoURL('uniapp-vue2');
+      repoURL = getRepoURL(repoURLTag.uniappVue2);
     }
   }
 
   if (vueVersion === 3) {
     const needTypeScript = await askNeedTypeScript();
     if (needTypeScript) {
-      repoURL = getRepoURL('uniapp-vue3-typescript');
+      repoURL = getRepoURL(repoURLTag.uniappVue3Typescript);
     }
     if (!needTypeScript) {
-      repoURL = getRepoURL('uniapp-vue3');
+      repoURL = getRepoURL(repoURLTag.uniappVue3);
     }
   }
 
@@ -101,7 +101,7 @@ const downloadUniappTemplate = async (projectName: string, targetDirectory: stri
  * @param targetDirectory - 目标存储路径
  */
 const downloadKoaTemplate = async (projectName: string, targetDirectory: string) => {
-  const repoURL = getRepoURL('koa');
+  const repoURL = getRepoURL(repoURLTag.koa);
   await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
 };
 

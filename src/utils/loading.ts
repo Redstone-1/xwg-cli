@@ -1,6 +1,6 @@
 import ora from "ora";
 import chalk from "chalk";
-import { LoadingOther } from '../types';
+import { TLoadingOther } from '../types';
 
 /**
  * 睡眠函数
@@ -21,7 +21,7 @@ const sleep = (delay: number) => {
  * @param projectName - 项目名
  * @returns
  */
-export const loading = async (message: string, callback: () => any, other: LoadingOther): Promise<any> => {
+export const loading = async (message: string, callback: () => any, other: TLoadingOther): Promise<any> => {
   const spinner = ora(message);
   spinner.start(); // 开启加载
   try {
