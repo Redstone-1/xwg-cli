@@ -5,9 +5,7 @@
  */
 import fs from 'fs-extra';
 import path from 'path';
-import util from 'util';
-import download from 'download-git-repo';
-import { TRepoURLTag, IRepoURLTag, TRepoURL } from './types';
+import { ValuesToUnion, RepoURLTag, RepoURL } from './types';
 
 /** 当前根目录 */
 export const ROOT_DIR = path.resolve(__dirname, '../');
@@ -27,13 +25,7 @@ export const BRAND_LOGO = `
 /** 当前版本号 */
 export const VERSION = version;
 
-export const getRepoURL = (tag: TRepoURLTag): TRepoURL<TRepoURLTag> => {
-  return `https://gitee.com/redstone-1/${tag}.git`;
-};
-
-export const downloadGitRepo = util.promisify(download);
-
-export const repoURLTag: IRepoURLTag = {
+export const repoURLTag: RepoURLTag = {
   vueTemplate: 'vue-template',
   vueTemplateTypescript: 'vue-template-typescript',
   reactTemplate: 'react-template',
@@ -46,4 +38,8 @@ export const repoURLTag: IRepoURLTag = {
   nest: 'nest',
   library: 'library',
   libraryTypescript: 'library-typescript',
+};
+
+export const getRepoURL = (tag: ValuesToUnion<RepoURLTag>): RepoURL => {
+  return `https://gitee.com/redstone-1/${tag}.git`;
 };

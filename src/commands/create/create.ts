@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import dirExistCall from './dirExistCall';
-import downloadRepo from './downloadRepo';
+import downloadRepo from './downloadGitRepo';
 
 /**
  * 创建新项目

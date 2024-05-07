@@ -1,6 +1,6 @@
 import Inquirer from 'inquirer';
-import { TPromptListItem } from '../types';
+import { PromptListItem } from '../types';
 
-export default async (prompts: TPromptListItem[]) => {
+export default async (prompts: PromptListItem[]) => {
   return await new Inquirer.prompt(prompts);
 };

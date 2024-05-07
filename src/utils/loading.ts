@@ -1,6 +1,6 @@
-import ora from "ora";
-import chalk from "chalk";
-import { TLoadingOther } from '../types';
+import ora from 'ora';
+import chalk from 'chalk';
+import { LoadingOtherParams } from '../types';
 
 /**
  * 睡眠函数
@@ -18,10 +18,14 @@ const sleep = (delay: number) => {
  * 加载中方法
  * @param message - 提示信息
  * @param callback - 执行的回调
- * @param projectName - 项目名
+ * @param other - 项目其他信息
  * @returns
  */
-export const loading = async (message: string, callback: () => any, other: TLoadingOther): Promise<any> => {
+export const loading = async (
+  message: string,
+  callback: () => any,
+  other: LoadingOtherParams
+): Promise<any> => {
   const spinner = ora(message);
   spinner.start(); // 开启加载
   try {
@@ -38,7 +42,7 @@ export const loading = async (message: string, callback: () => any, other: TLoad
     return res;
   } catch (error) {
     // 加载失败
-    spinner.fail("请求失败，正在重试...");
+    spinner.fail('请求失败，正在重试...');
     await sleep(1000);
     // 重新拉取
     return loading(message, callback, other);

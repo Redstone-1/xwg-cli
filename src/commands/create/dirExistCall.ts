@@ -1,5 +1,5 @@
-import fs from "fs-extra";
-import downloadRepo from './downloadRepo';
+import fs from 'fs-extra';
+import downloadGitRepo from './downloadGitRepo';
 import { askOverwrite } from './askUser';
 
 /**
@@ -12,14 +12,14 @@ export default async (options: any, projectName: string, targetDirectory: string
   if (options.force) {
     // 删除重名目录
     await fs.remove(targetDirectory);
-    await downloadRepo(projectName, targetDirectory);
+    await downloadGitRepo(projectName, targetDirectory);
   } else {
     const isOverwrite = await askOverwrite();
     // 选择 Overwirte
     if (isOverwrite) {
       // 先删除掉原有重名目录
       await fs.remove(targetDirectory);
-      await downloadRepo(projectName, targetDirectory);
+      await downloadGitRepo(projectName, targetDirectory);
     }
   }
 };

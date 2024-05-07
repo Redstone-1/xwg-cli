@@ -1,7 +1,7 @@
 import { program } from 'commander';
 import chalk from 'chalk';
 import { create } from './commands';
-import { BRAND_LOGO, VERSION } from './const';
+import { BRAND_LOGO, VERSION } from './constants';
 
 /**
  * 创建 Cli 类
@@ -29,8 +29,8 @@ class Cli {
 
     /** ---------------------------------------------- */
 
-    program.on("--help", function () {
-      console.log(`\r\n终端执行 ${chalk.cyan.bold("xwg <command> --help")} 获取更多命令详情\r\n`);
+    program.on('--help', function () {
+      console.log(`\r\n终端执行 ${chalk.cyan.bold('xwg <command> --help')} 获取更多命令详情\r\n`);
     });
 
     program.parse(process.argv);

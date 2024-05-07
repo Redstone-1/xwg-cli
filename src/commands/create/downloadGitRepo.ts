@@ -1,21 +1,19 @@
-import chalk from "chalk";
+import chalk from 'chalk';
 import {
   askCreateType,
   askNeedTypeScript,
   askIsAgreeCli,
   askVueVersion,
   askNeedUviewUI,
-} from "./askUser";
-import { downloadRepo } from '../../utils/downloadRepo';
-import { getRepoURL, repoURLTag } from "../../const";
-import { TProjectType, TRepoURL, TRepoURLTag } from '../../types';
+} from './askUser';
+import { downloadByGit } from '../../utils/downloadByGit';
+import { getRepoURL, repoURLTag } from '../../constants';
+import { ProjectType, RepoURL } from '../../types';
 
 /**
  * 下载 vue 模板
- * @param projectName - 项目名称
- * @param targetDirectory - 目标存储路径
  */
-const downloadVueTemplate = async (projectName: string, targetDirectory: string) => {
+const downloadVueTemplate = async (name: string, directory: string) => {
   let repoURL = '';
   const needTypeScript = await askNeedTypeScript();
   if (needTypeScript) {
@@ -24,15 +22,13 @@ const downloadVueTemplate = async (projectName: string, targetDirectory: string)
   if (!needTypeScript) {
     repoURL = getRepoURL(repoURLTag.vueTemplate);
   }
-  await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
+  await downloadByGit({ url: repoURL as RepoURL, name, directory });
 };
 
 /**
  * 下载 react 模板
- * @param projectName - 项目名称
- * @param targetDirectory - 目标存储路径
  */
-const downloadReactTemplate = async (projectName: string, targetDirectory: string) => {
+const downloadReactTemplate = async (name: string, directory: string) => {
   let repoURL = '';
   const needTypeScript = await askNeedTypeScript();
   if (needTypeScript) {
@@ -41,15 +37,13 @@ const downloadReactTemplate = async (projectName: string, targetDirectory: strin
   if (!needTypeScript) {
     repoURL = getRepoURL(repoURLTag.reactTemplate);
   }
-  await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
+  await downloadByGit({ url: repoURL as RepoURL, name, directory });
 };
 
 /**
  * 下载库模板
- * @param projectName - 项目名称
- * @param targetDirectory - 目标存储路径
  */
-const downloadLibraryTemplate = async (projectName: string, targetDirectory: string) => {
+const downloadLibraryTemplate = async (name: string, directory: string) => {
   let repoURL = '';
   const needTypeScript = await askNeedTypeScript();
   if (needTypeScript) {
@@ -58,15 +52,13 @@ const downloadLibraryTemplate = async (projectName: string, targetDirectory: str
   if (!needTypeScript) {
     repoURL = getRepoURL(repoURLTag.library);
   }
-  await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
+  await downloadByGit({ url: repoURL as RepoURL, name, directory });
 };
 
 /**
  * 下载 uniapp 模板
- * @param projectName - 项目名称
- * @param targetDirectory - 目标存储路径
  */
-const downloadUniappTemplate = async (projectName: string, targetDirectory: string) => {
+const downloadUniappTemplate = async (name: string, directory: string) => {
   const isAgreeCli = await askIsAgreeCli();
   if (!isAgreeCli) return;
 
@@ -92,26 +84,24 @@ const downloadUniappTemplate = async (projectName: string, targetDirectory: stri
     }
   }
 
-  await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
+  await downloadByGit({ url: repoURL as RepoURL, name, directory });
 };
 
 /**
  * 下载 koa 模板
- * @param projectName - 项目名称
- * @param targetDirectory - 目标存储路径
  */
-const downloadKoaTemplate = async (projectName: string, targetDirectory: string) => {
+const downloadKoaTemplate = async (name: string, directory: string) => {
   const repoURL = getRepoURL(repoURLTag.koa);
-  await downloadRepo({ repoURL: repoURL as TRepoURL<TRepoURLTag>, projectName, targetDirectory });
+  await downloadByGit({ url: repoURL as RepoURL, name, directory });
 };
 
 /**
  * 执行创建命令
- * @param projectType - 项目类型 "library" | "react" | "vue" | "uniapp" | "koa" | nest""
+ * @param projectType - 项目类型 'library' | 'react' | 'vue' | 'uniapp' | 'koa' | nest''
  * @param projectName - 项目名称
  * @param targetDirectory - 目标存储路径
  */
-const execCreate = async (projectType: TProjectType, projectName: string, targetDirectory: string) => {
+const execCreate = async (projectType: ProjectType, projectName: string, targetDirectory: string) => {
   switch (projectType) {
     case 'library':
       await downloadLibraryTemplate(projectName, targetDirectory);

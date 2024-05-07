@@ -1,14 +1,44 @@
 export type ValuesToUnion<T> = {
   [P in keyof T]: T[P]
-}[keyof T]
+}[keyof T];
 
-export type TLoadingOther = {
-  projectName: string
-}
+export type LoadingOtherParams = {
+  projectName: string;
+};
 
-export type TRepoURL<T extends string> = `https://gitee.com/redstone-1/${T}.git`;
+export type ProjectType =
+| 'library'
+| 'vue'
+| 'react'
+| 'uniapp'
+| 'koa'
+| 'nest';
 
-export interface IRepoURLTag {
+export type PromptType =
+| 'input'
+| 'number'
+| 'confirm'
+| 'list'
+| 'rawlist'
+| 'expand'
+| 'checkbox'
+| 'password'
+| 'editor';
+
+export type PromptListItem = {
+  type: PromptType;
+  name: string;
+  message: string;
+  choices: { name: string; value: string | number | boolean }[];
+  prefix?: string;
+  suffix?: string;
+  pageSize?: number;
+  loop?: boolean;
+  askAnswered?: boolean;
+  waitUserInput?: boolean;
+};
+
+export type RepoURLTag = {
   vueTemplate: 'vue-template';
   vueTemplateTypescript: 'vue-template-typescript';
   reactTemplate: 'react-template';
@@ -21,44 +51,14 @@ export interface IRepoURLTag {
   nest: 'nest';
   library: 'library';
   libraryTypescript: 'library-typescript';
-}
+};
 
-export type TRepoURLTag = ValuesToUnion<IRepoURLTag>
+type GenRepoURL<T extends string> = `https://gitee.com/redstone-1/${T}.git`;
 
-export type TProjectType =
-| 'library'
-| 'vue'
-| 'react'
-| 'uniapp'
-| 'koa'
-| 'nest';
+export type RepoURL = GenRepoURL<ValuesToUnion<RepoURLTag>>;
 
-export type TPromptType =
-| 'input'
-| 'number'
-| 'confirm'
-| 'list'
-| 'rawlist'
-| 'expand'
-| 'checkbox'
-| 'password'
-| 'editor';
-
-export type TPromptListItem = {
-  type: TPromptType,
-  name: string,
-  message: string,
-  choices: { name: string, value: string | number | boolean }[],
-  prefix?: string,
-  suffix?: string,
-  pageSize?: number,
-  loop?: boolean,
-  askAnswered?: boolean,
-  waitUserInput?: boolean,
-}
-
-export type TDownloadRepoParams = {
-  repoURL: TRepoURL<TRepoURLTag>,
-  projectName: string,
-  targetDirectory: string,
-}
+export type DownloadRepoParams = {
+  url: RepoURL;
+  name: string;
+  directory: string;
+};
