@@ -9,7 +9,6 @@ lerna-debug.log*
 
 es
 lib
-bin
 node_modules
 dist
 dist-ssr
