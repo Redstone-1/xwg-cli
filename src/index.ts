@@ -1,3 +1,3 @@
-import runner from './runner';
+import cli from './cli';
 
-export default runner;
+export default cli;

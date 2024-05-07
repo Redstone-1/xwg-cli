@@ -4,9 +4,9 @@
   "version": "0.0.2",
   "description": "A front-end cli for starting your project quickly",
   "type": "commonjs",
-  "main": "./bin/cli.js",
+  "main": "./bin/index.js",
   "bin": {
-    "xwg": "./bin/cli.js"
+    "xwg": "./bin/index.js"
   },
   "license": "MY LICENSE",
   "author": "xiwenge",
