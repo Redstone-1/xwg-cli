@@ -1,6 +1,6 @@
 import prompt from '../../utils/prompt';
 
-/** 询问要创建的项目类型 */
+/** 询问是否覆盖已有项目 */
 export const askOverwrite = async () => {
   const { isOverwrite } = await prompt([
     // 返回值为 Promise
