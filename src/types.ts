@@ -29,7 +29,7 @@ export type PromptListItem = {
   type: PromptType;
   name: string;
   message: string;
-  choices: { name: string; value: string | number | boolean }[];
+  choices?: { name: string; value: string | number | boolean }[];
   prefix?: string;
   suffix?: string;
   pageSize?: number;
@@ -62,3 +62,19 @@ export type DownloadRepoParams = {
   name: string;
   directory: string;
 };
+
+export type PrettierParserType = 'babel' | 'json' | 'yaml' | 'html' | 'less' | 'scss' | 'css' | 'flow' | 'typescript';
+
+export type LogMessage = {
+  msg: string;
+  start?: string;
+  end?: string;
+}
+
+export interface LoadingParams {
+  tip?: string;
+  call: () => Promise<any> | void;
+  success?: () => void;
+  // eslint-disable-next-line no-unused-vars
+  fail?: (error: unknown) => void;
+}

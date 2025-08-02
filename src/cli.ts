@@ -1,7 +1,8 @@
-import { program } from 'commander';
 import chalk from 'chalk';
+import { program } from 'commander';
 import { create } from './commands';
 import { BRAND_LOGO, VERSION } from './constants';
+import log from './utils/log';
 
 /**
  * 创建 Cli 类
@@ -15,10 +16,8 @@ class Cli {
   start = () => {
     program.name(chalk.cyan('xwg')).usage(`${chalk.yellow('<command>')} [options]`);
 
-    program.version(
-      `\r\n  ${chalk.cyan.bold(VERSION)}
-      ${chalk.cyan.bold(BRAND_LOGO)}`
-    );
+    log.log(() => chalk.cyan(`Welcome to use xwg-cli, current version is v${VERSION}.`));
+    log.log(() => chalk.cyan(BRAND_LOGO));
 
     /** ------------ 将所有命令解耦出去独立 ------------ */
 
@@ -30,7 +29,7 @@ class Cli {
     /** ---------------------------------------------- */
 
     program.on('--help', function () {
-      console.log(`\r\n终端执行 ${chalk.cyan.bold('xwg <command> --help')} 获取更多命令详情\r\n`);
+      log.log(() => `\r\n ${chalk.gray('[xwg-cli] 终端执行')} ${chalk.cyan('xwg <command> --help')} ${chalk.gray('获取更多命令详情')}`);
     });
 
     program.parse(process.argv);

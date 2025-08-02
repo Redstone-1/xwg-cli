@@ -4,15 +4,11 @@ import prompt from '../../utils/prompt';
 export const askOverwrite = async () => {
   const { isOverwrite } = await prompt([
     // 返回值为 Promise
-    // 具体配置参见：https://www.npmjs.com/package/inquirer#questions
+    // 具体配置参见: https://www.npmjs.com/package/inquirer#questions
     {
-      type: 'list',
+      type: 'confirm',
       name: 'isOverwrite',
-      message: '原目录已经存在，请选择是否覆盖',
-      choices: [
-        { name: '覆盖', value: true },
-        { name: '取消', value: false },
-      ],
+      message: '原目录已经存在, 请选择是否覆盖',
     },
   ]);
 
@@ -23,7 +19,7 @@ export const askOverwrite = async () => {
 export const askCreateType = async () => {
   const { projectType } = await prompt([
     // 返回值为 Promise
-    // 具体配置参见：https://www.npmjs.com/package/inquirer#questions
+    // 具体配置参见: https://www.npmjs.com/package/inquirer#questions
     {
       type: 'list',
       name: 'projectType',
@@ -46,15 +42,11 @@ export const askCreateType = async () => {
 export const askNeedTypeScript = async () => {
   const { needTypeScript } = await prompt([
     // 返回值为 Promise
-    // 具体配置参见：https://www.npmjs.com/package/inquirer#questions
+    // 具体配置参见: https://www.npmjs.com/package/inquirer#questions
     {
-      type: 'list',
+      type: 'confirm',
       name: 'needTypeScript',
       message: '是否需要 TypeScript ?',
-      choices: [
-        { name: '需要', value: true },
-        { name: '不需要', value: false },
-      ],
     },
   ]);
 
@@ -65,26 +57,37 @@ export const askNeedTypeScript = async () => {
 export const askIsAgreeCli = async () => {
   const { isAgreeCli } = await prompt([
     // 返回值为 Promise
-    // 具体配置参见：https://www.npmjs.com/package/inquirer#questions
+    // 具体配置参见: https://www.npmjs.com/package/inquirer#questions
     {
-      type: 'list',
+      type: 'confirm',
       name: 'isAgreeCli',
-      message: 'uniapp 模板采用 cli 创建，暂不提供由 HBuilderX 创建的模板。是否继续？',
-      choices: [
-        { name: '继续', value: true },
-        { name: '退出', value: false },
-      ],
+      message: 'uniapp 模板采用 cli 创建, 暂不提供由 HBuilderX 创建的模板, 是否继续？',
     },
   ]);
 
   return isAgreeCli;
 };
 
+/** 询问是否采用 vite 创建的模板 */
+export const askIsAgreeVite = async () => {
+  const { isAgreeVite } = await prompt([
+    // 返回值为 Promise
+    // 具体配置参见: https://www.npmjs.com/package/inquirer#questions
+    {
+      type: 'confirm',
+      name: 'isAgreeVite',
+      message: '此模板构建工具使用 vite, 是否继续？',
+    },
+  ]);
+
+  return isAgreeVite;
+};
+
 /** 询问使用的 vue 版本 */
 export const askVueVersion = async () => {
   const { vueVersion } = await prompt([
     // 返回值为 Promise
-    // 具体配置参见：https://www.npmjs.com/package/inquirer#questions
+    // 具体配置参见: https://www.npmjs.com/package/inquirer#questions
     {
       type: 'list',
       name: 'vueVersion',
@@ -103,17 +106,58 @@ export const askVueVersion = async () => {
 export const askNeedUviewUI = async () => {
   const { needUviewUI } = await prompt([
     // 返回值为 Promise
-    // 具体配置参见：https://www.npmjs.com/package/inquirer#questions
+    // 具体配置参见: https://www.npmjs.com/package/inquirer#questions
     {
-      type: 'list',
+      type: 'confirm',
       name: 'needUviewUI',
       message: '是否需要 uview-ui ?',
-      choices: [
-        { name: '需要', value: true },
-        { name: '不需要', value: false },
-      ],
     },
   ]);
 
   return needUviewUI;
+};
+
+/** 询问是否需要 eslint */
+export const askNeedESlint = async () => {
+  const { needESlint } = await prompt([
+    // 返回值为 Promise
+    // 具体配置参见: https://www.npmjs.com/package/inquirer#questions
+    {
+      type: 'confirm',
+      name: 'needESlint',
+      message: '是否需要 eslint ?',
+    },
+  ]);
+
+  return needESlint;
+};
+
+/** 询问是否需要 commitlint */
+export const askNeedCommitlint = async () => {
+  const { needCommitlint } = await prompt([
+    // 返回值为 Promise
+    // 具体配置参见: https://www.npmjs.com/package/inquirer#questions
+    {
+      type: 'confirm',
+      name: 'needCommitlint',
+      message: '是否需要 commitlint ?',
+    },
+  ]);
+
+  return needCommitlint;
+};
+
+/** 询问是否继续创建 vue3 模板 */
+export const askAgreeVue3Template = async () => {
+  const { agreeVue3Tempalte } = await prompt([
+    // 返回值为 Promise
+    // 具体配置参见: https://www.npmjs.com/package/inquirer#questions
+    {
+      type: 'confirm',
+      name: 'agreeVue3Tempalte',
+      message: '目前仅提供 vue3 版本的模板, 是否继续 ?',
+    },
+  ]);
+
+  return agreeVue3Tempalte;
 };

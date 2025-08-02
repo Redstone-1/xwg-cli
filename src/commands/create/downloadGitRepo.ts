@@ -1,28 +1,96 @@
-import chalk from 'chalk';
+import { getRepoURL, repoURLTag, ProjectTypeEnum } from '../../constants';
+import { ProjectType, RepoURL } from '../../types';
+import { downloadByGit } from '../../utils/downloadByGit';
+import log from '../../utils/log';
+import { overwriteJSONFile } from '../../utils/overwriteJSONFile';
+import { writeFileByEjs, PrettierParserTypeEnum } from '../../utils/writeFileByEjs';
 import {
   askCreateType,
   askNeedTypeScript,
   askIsAgreeCli,
   askVueVersion,
   askNeedUviewUI,
+  askAgreeVue3Template,
+  askNeedESlint,
 } from './askUser';
-import { downloadByGit } from '../../utils/downloadByGit';
-import { getRepoURL, repoURLTag } from '../../constants';
-import { ProjectType, RepoURL } from '../../types';
+import eslintConfigTemp from './configfile-template/eslint';
+import eslintIgnoreTemp from './configfile-template/eslintIgnore';
 
 /**
  * 下载 vue 模板
  */
 const downloadVueTemplate = async (name: string, directory: string) => {
   let repoURL = '';
+  const agreeVue3Tempalte = await askAgreeVue3Template();
+
+  if (!agreeVue3Tempalte) {
+    return;
+  }
+
   const needTypeScript = await askNeedTypeScript();
+
   if (needTypeScript) {
     repoURL = getRepoURL(repoURLTag.vueTemplateTypescript);
   }
+
   if (!needTypeScript) {
     repoURL = getRepoURL(repoURLTag.vueTemplate);
   }
+
   await downloadByGit({ url: repoURL as RepoURL, name, directory });
+
+  const needESlint = await askNeedESlint();
+
+  if (needESlint) {
+    await writeFileByEjs({
+      fileName: '.eslintrc',
+      dir: directory,
+      ejsParams: {
+        renderStr: eslintConfigTemp,
+        options: {
+          language: needTypeScript ? 'typescript' : '',
+          framework: 'vue'
+        }
+      },
+      prettierParserType: PrettierParserTypeEnum.JSON
+    });
+
+    await writeFileByEjs({
+      fileName: '.eslintignore',
+      dir: directory,
+      ejsParams: { renderStr: eslintIgnoreTemp }
+    });
+
+    await overwriteJSONFile({
+      fileName: 'package.json',
+      dir: directory,
+      cb: (obj) => {
+        if ('scripts' in obj) {
+          obj.scripts = {
+            ...obj.scripts,
+            'lint': "eslint . --ext '.js,.ts' --fix",
+          };
+        }
+
+        if ('devDependencies' in obj) {
+          obj.devDependencies = needTypeScript
+          ? {
+            ...obj.devDependencies,
+            '@typescript-eslint/eslint-plugin': '^6.0.0',
+            '@typescript-eslint/parser': '^6.0.0',
+            'eslint': '^8.44.0',
+            'eslint-plugin-vue': '^9.15.1',
+            'vue-eslint-parser': '^9.3.1',
+          } : {
+            ...obj.devDependencies,
+            'eslint': '^8.44.0',
+            'eslint-plugin-vue': '^9.15.1',
+            'vue-eslint-parser': '^9.3.1',
+          };
+        }
+      }
+    });
+  }
 };
 
 /**
@@ -38,6 +106,59 @@ const downloadReactTemplate = async (name: string, directory: string) => {
     repoURL = getRepoURL(repoURLTag.reactTemplate);
   }
   await downloadByGit({ url: repoURL as RepoURL, name, directory });
+
+  const needESlint = await askNeedESlint();
+
+  if (needESlint) {
+    await writeFileByEjs({
+      fileName: '.eslintrc',
+      dir: directory,
+      ejsParams: {
+        renderStr: eslintConfigTemp,
+        options: {
+          language: needTypeScript ? 'typescript' : '',
+          framework: 'react'
+        }
+      },
+      prettierParserType: PrettierParserTypeEnum.JSON
+    });
+
+    await writeFileByEjs({
+      fileName: '.eslintignore',
+      dir: directory,
+      ejsParams: { renderStr: eslintIgnoreTemp }
+    });
+
+    await overwriteJSONFile({
+      fileName: 'package.json',
+      dir: directory,
+      cb: (obj) => {
+        if ('scripts' in obj) {
+          obj.scripts = {
+            ...obj.scripts,
+            'lint': 'eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0',
+          };
+        }
+
+        if ('devDependencies' in obj) {
+          obj.devDependencies = needTypeScript
+          ? {
+            ...obj.devDependencies,
+            '@typescript-eslint/eslint-plugin': '^6.0.0',
+            '@typescript-eslint/parser': '^6.0.0',
+            'eslint': '^8.44.0',
+            'eslint-plugin-react': '^7.32.2',
+          } : {
+            ...obj.devDependencies,
+            'eslint': '^8.44.0',
+            'eslint-plugin-react': '^7.32.2',
+            'eslint-plugin-react-hooks': '^4.6.0',
+            'eslint-plugin-react-refresh': '^0.4.1',
+          };
+        }
+      }
+    });
+  }
 };
 
 /**
@@ -97,29 +218,26 @@ const downloadKoaTemplate = async (name: string, directory: string) => {
 
 /**
  * 执行创建命令
- * @param projectType - 项目类型 'library' | 'react' | 'vue' | 'uniapp' | 'koa' | nest''
+ * @param projectType - 项目类型
  * @param projectName - 项目名称
  * @param targetDirectory - 目标存储路径
  */
 const execCreate = async (projectType: ProjectType, projectName: string, targetDirectory: string) => {
   switch (projectType) {
-    case 'library':
+    case ProjectTypeEnum.LIBRARY:
       await downloadLibraryTemplate(projectName, targetDirectory);
       break;
-    case 'vue':
+    case ProjectTypeEnum.VUE:
       await downloadVueTemplate(projectName, targetDirectory);
       break;
-    case 'react':
+    case ProjectTypeEnum.REACT:
       await downloadReactTemplate(projectName, targetDirectory);
       break;
-    case 'uniapp':
+    case ProjectTypeEnum.UNIAPP:
       await downloadUniappTemplate(projectName, targetDirectory);
       break;
-    case 'koa':
+    case ProjectTypeEnum.KOA:
       await downloadKoaTemplate(projectName, targetDirectory);
-      break;
-    case 'nest':
-      console.log(chalk.gray.bold(`\r\n  开发中，敬请期待...\r\n`));
       break;
   }
 };
@@ -130,7 +248,7 @@ const execCreate = async (projectType: ProjectType, projectName: string, targetD
  * @param targetDirectory - 目标存储路径
  */
 export default async (projectName: string, targetDirectory: string) => {
-  console.log(chalk.red.bold(`\r\n  请注意：本 cli 下大部分模板采用 vite 构建，node 版本需要 14.18+ 或 16+ 或更高\r\n`));
+  log.info({ msg: '请注意: 本 cli 下部分模板采用 vite 构建, node 版本需要 14.18+ 或 16+ 或更高', end: '\r\n' });
 
   const projectType = await askCreateType();
   await execCreate(projectType, projectName, targetDirectory);

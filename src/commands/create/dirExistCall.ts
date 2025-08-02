@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
-import downloadGitRepo from './downloadGitRepo';
 import { askOverwrite } from './askUser';
+import downloadGitRepo from './downloadGitRepo';
 
 /**
  * 如果目录已经存在时调用

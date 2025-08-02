@@ -18,9 +18,9 @@ node 版本 14.18+ 或 16+ 或更高
 
 `xwg create <project-name> -f (--force)` 
 
-例如：`xwg create vue-template -f`
+例如: `xwg create vue-template -f`
 # 查看命令详情
 
 `xwg <command> --help`
 
-例如：`xwg create --help`
+例如: `xwg create --help`

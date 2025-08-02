@@ -15,15 +15,48 @@
     "ecmaVersion": "latest"
   },
   "plugins": [
-    "@typescript-eslint"
+    "import",
+    "@typescript-eslint",
+    "eslint-plugin-standard"
   ],
   "rules": {
     "semi": 2,
+    "space-before-blocks": 2,
+    "space-before-function-paren": ["error", { "anonymous": "always", "named": "never", "asyncArrow": "always" }],
+    "object-curly-spacing": ["error", "always"],
+    "space-in-parens": ["error", "never"],
+    "space-infix-ops": 2,
+    "space-unary-ops": 2,
+    "no-extra-semi": 2,
+    "no-multiple-empty-lines": 2,
+    "no-trailing-spaces": 2,
+    "no-multi-spaces": 2,
+    "no-mixed-spaces-and-tabs": 2,
+    "no-unreachable": 2,
+    "no-unused-expressions": 2,
+    "no-unused-vars": 2,
+    "quotes": ["warn", "single", { "avoidEscape": true }],
     "no-undef": 0,
-    "no-console": 0,
-    "no-use-before-define": 2,
     "no-redeclare": 2,
     "@typescript-eslint/no-empty-function": 0,
-    "@typescript-eslint/no-explicit-any": 0
+    "@typescript-eslint/no-explicit-any": 0,
+    "keyword-spacing": ["error", { "before": true, "after": true }],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
   }
 }
